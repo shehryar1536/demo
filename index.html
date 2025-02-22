@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Game</title>
+    <script>
+        function joinRoom() {
+            // Get the roomID from the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const roomID = urlParams.get('roomID');
+
+            if (roomID) {
+                // Custom deep link for your Unity game
+                const deepLink = `mygame://joinroom?roomID=${roomID}`;
+
+                // Try opening the app
+                window.location.href = deepLink;
+
+                // If the app is not installed, redirect to the Play Store after 2 seconds
+                setTimeout(() => {
+                    window.location.href = "https://play.google.com/store/apps/details?id=com.yourcompany.mygame"; // Change this
+                }, 2000);
+            } else {
+                document.getElementById("status").innerText = "Invalid room link!";
+            }
+        }
+
+        window.onload = joinRoom;
+    </script>
+</head>
+<body>
+    <h2>Redirecting...</h2>
+    <p id="status">If you are not redirected, <a id="manual-link">click here</a>.</p>
+    <script>
+        document.getElementById("manual-link").href = window.location.href;
+    </script>
+</body>
+</html>
